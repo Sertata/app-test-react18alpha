@@ -1,45 +1,27 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useTransition, Suspense, useState } from "react";
+import { DataFetch } from "./components/DataFetch";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [value, setValue] = useState("");
+  const [isRefreshing, startRefreshing] = useTransition();
+  const handleChange = (e: any,) => {
+    const { value } = e.target;
+    startRefreshing(() => {
+      setValue(value);
+    });
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <input type="text" onChange={handleChange} value={value} />
+
+      <div style={{ opacity: isRefreshing ? 0.5 : 1 }}>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <DataFetch num={value} />
+        </Suspense>
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "react": "^18.0.0-alpha-568dc3532",
-    "react-dom": "^18.0.0-alpha-568dc3532"
+    "react-dom": "^18.0.0-alpha-568dc3532",
+    "react-scripts": "4.0.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
